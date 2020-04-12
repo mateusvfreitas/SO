@@ -8,3 +8,7 @@ OBJ = queue.o testafila.o
 
 queue: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
+
+.PHONY : clean
+clean :
+	-rm -f $(OBJ) queue

@@ -25,6 +25,8 @@ typedef struct task_t
     ucontext_t context; // Userlevel context
     enum status status;
     struct task_t *controle;
+    int staticPrio;
+    int dynamicPrio;
 
 } task_t ;
 

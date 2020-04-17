@@ -1,4 +1,5 @@
 #include "pingpong.h"
+#define DEFAULT 0
 
 int taskId;
 task_t taskMain;
@@ -7,36 +8,61 @@ task_t dispatcher;
 task_t *tasksReady;
 task_t *tasksSuspended;
 
-task_t* scheduler()
+task_t *aging(task_t *x)
 {
-    return tasksReady;
+    //aqui vamos mexer no DYNAMIC (?)
+    int lowest = 21;
+    int alfa = -1;
+    // printf("lowest = %d\n", lowest);
+
+    task_t *first = x;
+    task_t *aux = x;
+    task_t *eldest = x;
+
+    while (aux->next != first)
+    {
+        if (aux->dynamicPrio < lowest)
+        {
+            lowest = aux->dynamicPrio;
+            eldest = aux;
+        }
+        //aqui acontece o aging
+        aux->dynamicPrio--;
+        aux = aux->next;
+    }
+    eldest->dynamicPrio = eldest->staticPrio;
+    return eldest;
+}
+
+task_t *scheduler()
+{
+    return aging(tasksReady);
 }
 
 void dispatcher_body(void *arg)
 {
-    while(queue_size((queue_t*)tasksReady) > 0)
+    while (queue_size((queue_t *)tasksReady) > 0)
     {
-        task_t* next = scheduler();
-        if(next)
+        task_t *next = scheduler();
+        if (next)
         {
             // Trocas de contexto
             task_switch(next);
-            if(next->status == Ready)
+            if (next->status == Ready)
             {
-                queue_remove((queue_t **) &tasksReady, (queue_t *) next);
-                queue_append((queue_t **) &tasksReady, (queue_t *) next);
+                queue_remove((queue_t **)&tasksReady, (queue_t *)next);
+                queue_append((queue_t **)&tasksReady, (queue_t *)next);
             }
 
-            else if(next->status == Ended)
+            else if (next->status == Ended)
             {
-                queue_remove((queue_t **) &tasksReady, (queue_t *) next);
+                queue_remove((queue_t **)&tasksReady, (queue_t *)next);
             }
 
             else
             {
                 return;
             }
-            
         }
     }
     task_exit(0);
@@ -66,7 +92,7 @@ void pingpong_init()
 
     task_create(&dispatcher, dispatcher_body, NULL);
     dispatcher.controle = &taskMain;
-    queue_remove((queue_t **) &tasksReady, (queue_t *) &dispatcher);
+    queue_remove((queue_t **)&tasksReady, (queue_t *)&dispatcher);
 
     /* desativa o buffer da saida padrao (stdout), usado pela função printf */
     setvbuf(stdout, 0, _IONBF, 0);
@@ -109,6 +135,8 @@ int task_create(task_t *task, void (*start_func)(void *), void *arg)
     taskId++;
     task->status = Ready;
     task->controle = &dispatcher;
+    task->staticPrio = DEFAULT;
+    task->dynamicPrio = DEFAULT;
 
 #ifdef DEBUG
     printf("task_create: criou tarefa %d\n", task->tid);
@@ -136,7 +164,7 @@ int task_switch(task_t *task)
     printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
 #endif
     // ucontext_t *contextCurrent = &taskCurrent->context;
-    
+
     task_t *taskPrevious = taskCurrent;
     taskCurrent = task;
 
@@ -158,18 +186,18 @@ int task_id()
 // queue e mudando seu estado para "suspensa"; usa a tarefa atual se task==NULL
 void task_suspend(task_t *task, task_t **queue)
 {
-    if(task == NULL)
+    if (task == NULL)
     {
         task = taskCurrent;
     }
 
-    if(queue == NULL)
+    if (queue == NULL)
     {
         return;
     }
 
-    queue_remove((queue_t **) &tasksReady, (queue_t *) task);
-    queue_append((queue_t **) &tasksSuspended, (queue_t *) task);
+    queue_remove((queue_t **)&tasksReady, (queue_t *)task);
+    queue_append((queue_t **)&tasksSuspended, (queue_t *)task);
 
     task->status = Suspended;
 }
@@ -178,13 +206,62 @@ void task_suspend(task_t *task, task_t **queue)
 // tarefas prontas ("ready queue") e mudando seu estado para "pronta"
 void task_resume(task_t *task)
 {
-    queue_remove((queue_t **) &tasksSuspended, (queue_t *) task);
-    queue_append((queue_t **) &tasksReady, (queue_t *) task);
+    queue_remove((queue_t **)&tasksSuspended, (queue_t *)task);
+    queue_append((queue_t **)&tasksReady, (queue_t *)task);
 
     task->status = Ready;
 }
 
+// operações de escalonamento ==================================================
+
+// libera o processador para a próxima tarefa, retornando à fila de tarefas
+// prontas ("ready queue")
 void task_yield()
 {
     task_switch(&dispatcher);
+}
+
+// define a prioridade estática de uma tarefa (ou a tarefa atual)
+void task_setprio(task_t *task, int prio)
+{
+    task_t *teste;
+    if (task == NULL)
+    {
+        teste = taskCurrent;
+        if (prio <= 20 && prio >= -20)
+        {
+            teste->staticPrio = prio;
+            teste->dynamicPrio = prio;
+        }
+        else
+        {
+            // prioridade invalida;
+        }
+    }
+    else
+    {
+        teste = task;
+        if (prio <= 20 && prio >= -20)
+        {
+            teste->staticPrio = prio;
+            teste->dynamicPrio = prio;
+        }
+        else
+        {
+            // prioridade invalida;
+        }
+    }
+}
+
+// retorna a prioridade estática de uma tarefa (ou a tarefa atual)
+int task_getprio(task_t *task)
+{
+    if (task == NULL)
+    {
+        return taskCurrent->staticPrio;
+    }
+    else
+    {
+        return task->staticPrio;
+    }
 }

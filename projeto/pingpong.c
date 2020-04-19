@@ -8,35 +8,33 @@ task_t dispatcher;
 task_t *tasksReady;
 task_t *tasksSuspended;
 
-task_t *aging(task_t *x)
-{
-    //aqui vamos mexer no DYNAMIC (?)
-    int lowest = 21;
-    int alfa = -1;
-    // printf("lowest = %d\n", lowest);
-
-    task_t *first = x;
-    task_t *aux = x;
-    task_t *eldest = x;
-
-    while (aux->next != first)
-    {
-        if (aux->dynamicPrio < lowest)
-        {
-            lowest = aux->dynamicPrio;
-            eldest = aux;
-        }
-        //aqui acontece o aging
-        aux->dynamicPrio--;
-        aux = aux->next;
-    }
-    eldest->dynamicPrio = eldest->staticPrio;
-    return eldest;
-}
-
 task_t *scheduler()
 {
-    return aging(tasksReady);
+    int lowest;
+
+    task_t *first = tasksReady;
+    task_t *aux = tasksReady->next;
+    task_t *eldest = tasksReady;
+    lowest = eldest->dynamicPrio;
+
+    while(aux != first)
+    {
+        if(aux->dynamicPrio <= lowest)
+        {
+            lowest = aux->dynamicPrio;
+            eldest->dynamicPrio--;
+            eldest = aux;
+        }
+
+        else
+        {
+            aux->dynamicPrio--;
+        }
+        aux = aux->next;
+    }
+
+    eldest->dynamicPrio = eldest->staticPrio;
+    return eldest;
 }
 
 void dispatcher_body(void *arg)
@@ -66,18 +64,6 @@ void dispatcher_body(void *arg)
         }
     }
     task_exit(0);
-
-    // while (userTasks > 0)
-    // {
-    //     next = scheduler(); // scheduler é uma função
-    //     if (next)
-    //     {
-    //         ...                    // ações antes de lançar a tarefa "next", se houverem
-    //             task_switch(next); // transfere controle para a tarefa "next"
-    //         ...                    // ações após retornar da tarefa "next", se houverem
-    //     }
-    // }
-    // task_exit(0); // encerra a tarefa dispatcher
 }
 
 // funções gerais ==============================================================
@@ -224,14 +210,13 @@ void task_yield()
 // define a prioridade estática de uma tarefa (ou a tarefa atual)
 void task_setprio(task_t *task, int prio)
 {
-    task_t *teste;
     if (task == NULL)
     {
-        teste = taskCurrent;
+        task = taskCurrent;
         if (prio <= 20 && prio >= -20)
         {
-            teste->staticPrio = prio;
-            teste->dynamicPrio = prio;
+            task->staticPrio = prio;
+            task->dynamicPrio = prio;
         }
         else
         {
@@ -240,11 +225,10 @@ void task_setprio(task_t *task, int prio)
     }
     else
     {
-        teste = task;
         if (prio <= 20 && prio >= -20)
         {
-            teste->staticPrio = prio;
-            teste->dynamicPrio = prio;
+            task->staticPrio = prio;
+            task->dynamicPrio = prio;
         }
         else
         {

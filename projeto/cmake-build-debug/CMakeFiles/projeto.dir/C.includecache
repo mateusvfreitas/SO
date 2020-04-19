@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mateus/Documents/UTFPR/SO/projeto/datatypes.h
+ucontext.h
+-
+stdio.h
+-
+stdlib.h
+-
+queue.h
+/home/mateus/Documents/UTFPR/SO/projeto/queue.h
+
+/home/mateus/Documents/UTFPR/SO/projeto/pingpong.c
+pingpong.h
+/home/mateus/Documents/UTFPR/SO/projeto/pingpong.h
+
+/home/mateus/Documents/UTFPR/SO/projeto/pingpong.h
+datatypes.h
+/home/mateus/Documents/UTFPR/SO/projeto/datatypes.h
+
+/home/mateus/Documents/UTFPR/SO/projeto/queue.h
+

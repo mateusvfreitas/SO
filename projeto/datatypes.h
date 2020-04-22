@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
+#include <signal.h>
+#include <sys/time.h>
 
 #define STACKSIZE 32768		/* tamanho de pilha das threads */
 #define _XOPEN_SOURCE 600	/* para compilar no MacOS */
@@ -27,6 +29,8 @@ typedef struct task_t
     struct task_t *controle;
     int staticPrio;
     int dynamicPrio;
+    int sysTask; // Flag que diferencia tarefas de sistema de taredas de usuário
+    int ticks;
 
 } task_t ;
 

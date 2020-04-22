@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/mateus/Documents/UTFPR/SO/projeto/pingpong-scheduler.c" "/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles/projeto.dir/pingpong-scheduler.c.o"
+  "/home/mateus/Documents/UTFPR/SO/projeto/pingpong-preempcao.c" "/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles/projeto.dir/pingpong-preempcao.c.o"
   "/home/mateus/Documents/UTFPR/SO/projeto/pingpong.c" "/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o"
   "/home/mateus/Documents/UTFPR/SO/projeto/queue.c" "/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles/projeto.dir/queue.c.o"
   )

@@ -15,6 +15,10 @@ stdlib.h
 -
 queue.h
 /home/mateus/Documents/UTFPR/SO/projeto/queue.h
+signal.h
+-
+sys/time.h
+-
 
 /home/mateus/Documents/UTFPR/SO/projeto/pingpong.c
 pingpong.h

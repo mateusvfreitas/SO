@@ -123,32 +123,32 @@ projeto/fast:
 	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/build
 .PHONY : projeto/fast
 
-pingpong-scheduler.o: pingpong-scheduler.c.o
+pingpong-preempcao.o: pingpong-preempcao.c.o
 
-.PHONY : pingpong-scheduler.o
+.PHONY : pingpong-preempcao.o
 
 # target to build an object file
-pingpong-scheduler.c.o:
-	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-scheduler.c.o
-.PHONY : pingpong-scheduler.c.o
+pingpong-preempcao.c.o:
+	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-preempcao.c.o
+.PHONY : pingpong-preempcao.c.o
 
-pingpong-scheduler.i: pingpong-scheduler.c.i
+pingpong-preempcao.i: pingpong-preempcao.c.i
 
-.PHONY : pingpong-scheduler.i
+.PHONY : pingpong-preempcao.i
 
 # target to preprocess a source file
-pingpong-scheduler.c.i:
-	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-scheduler.c.i
-.PHONY : pingpong-scheduler.c.i
+pingpong-preempcao.c.i:
+	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-preempcao.c.i
+.PHONY : pingpong-preempcao.c.i
 
-pingpong-scheduler.s: pingpong-scheduler.c.s
+pingpong-preempcao.s: pingpong-preempcao.c.s
 
-.PHONY : pingpong-scheduler.s
+.PHONY : pingpong-preempcao.s
 
 # target to generate assembly for a file
-pingpong-scheduler.c.s:
-	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-scheduler.c.s
-.PHONY : pingpong-scheduler.c.s
+pingpong-preempcao.c.s:
+	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-preempcao.c.s
+.PHONY : pingpong-preempcao.c.s
 
 pingpong.o: pingpong.c.o
 
@@ -213,9 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... projeto"
-	@echo "... pingpong-scheduler.o"
-	@echo "... pingpong-scheduler.i"
-	@echo "... pingpong-scheduler.s"
+	@echo "... pingpong-preempcao.o"
+	@echo "... pingpong-preempcao.i"
+	@echo "... pingpong-preempcao.s"
 	@echo "... pingpong.o"
 	@echo "... pingpong.i"
 	@echo "... pingpong.s"

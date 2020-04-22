@@ -7,8 +7,8 @@ include_directories(.)
 
 add_executable(projeto
         datatypes.h
-        pingpong-scheduler.c
         pingpong.c
         pingpong.h
         queue.c
-        queue.h)
+        queue.h
+        pingpong-preempcao.c)

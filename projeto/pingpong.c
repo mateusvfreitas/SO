@@ -1,5 +1,6 @@
 #include "pingpong.h"
-#define DEFAULT 0
+#define PRIO 0
+#define QUANTUM 20
 
 int taskId;
 task_t taskMain;
@@ -8,9 +9,15 @@ task_t dispatcher;
 task_t *tasksReady;
 task_t *tasksSuspended;
 
+// estrutura que define um tratador de sinal
+struct sigaction action ;
+// estrutura de inicialização to timer
+struct itimerval timer;
+
 task_t *scheduler()
 {
     int lowest;
+    int alfa = -1;
 
     task_t *first = tasksReady;
     task_t *aux = tasksReady->next;
@@ -19,10 +26,10 @@ task_t *scheduler()
 
     while(aux != first)
     {
-        if(aux->dynamicPrio <= lowest)
+        if((aux->dynamicPrio < lowest))
         {
             lowest = aux->dynamicPrio;
-            eldest->dynamicPrio--;
+            eldest->dynamicPrio += alfa;
             eldest = aux;
         }
 
@@ -66,6 +73,57 @@ void dispatcher_body(void *arg)
     task_exit(0);
 }
 
+// Similar à timer.c ===========================================================
+void tratador()
+{
+    // Ao ser acionada, a rotina de tratamento de ticks de relógio deve decrementar o contador de quantum da tarefa
+    // corrente, se for uma tarefa de usuário.
+    if(taskCurrent->sysTask == 0)
+    {
+        taskCurrent->ticks--;
+        
+        // Se o contador de quantum chegar a zero, a tarefa em execução deve voltar à fila de prontas e o controle do
+        // processador deve ser devolvido ao dispatcher.
+        if(taskCurrent->ticks == 0)
+        {
+            task_yield();
+        }
+    }
+
+    else
+    {
+        return;
+    }
+    
+}
+
+void timerFunction()
+{
+    // registra a ação para o sinal de timer SIGALRM
+    action.sa_handler = tratador ;
+    sigemptyset (&action.sa_mask) ;
+    action.sa_flags = 0 ;
+    if (sigaction (SIGALRM, &action, 0) < 0)
+    {
+        perror ("Erro em sigaction: ") ;
+        exit (1) ;
+    }
+
+    // ajusta valores do temporizador
+    timer.it_value.tv_usec = 1000 ;      // primeiro disparo, em micro-segundos
+    timer.it_value.tv_sec  = 0 ;      // primeiro disparo, em segundos
+    timer.it_interval.tv_usec = 1000 ;   // disparos subsequentes, em micro-segundos
+    timer.it_interval.tv_sec  = 0 ;   // disparos subsequentes, em segundos
+
+    // arma o temporizador ITIMER_REAL (vide man setitimer)
+    if (setitimer (ITIMER_REAL, &timer, 0) < 0)
+    {
+        perror ("Erro em setitimer: ") ;
+        exit (1) ;
+    }
+}
+// =============================================================================
+
 // funções gerais ==============================================================
 
 // Inicializa o sistema operacional; deve ser chamada no inicio do main()
@@ -78,7 +136,9 @@ void pingpong_init()
 
     task_create(&dispatcher, dispatcher_body, NULL);
     dispatcher.controle = &taskMain;
+    dispatcher.sysTask = 1; // Dispatcher é uma tarefa crítica -> tarefa de sistema
     queue_remove((queue_t **)&tasksReady, (queue_t *)&dispatcher);
+    timerFunction();
 
     /* desativa o buffer da saida padrao (stdout), usado pela função printf */
     setvbuf(stdout, 0, _IONBF, 0);
@@ -121,8 +181,9 @@ int task_create(task_t *task, void (*start_func)(void *), void *arg)
     taskId++;
     task->status = Ready;
     task->controle = &dispatcher;
-    task->staticPrio = DEFAULT;
-    task->dynamicPrio = DEFAULT;
+    task->staticPrio = PRIO;
+    task->dynamicPrio = PRIO;
+    task->sysTask = 0;
 
 #ifdef DEBUG
     printf("task_create: criou tarefa %d\n", task->tid);
@@ -146,13 +207,14 @@ void task_exit(int exitCode)
 // alterna a execução para a tarefa indicada
 int task_switch(task_t *task)
 {
-#ifdef DEBUG
-    printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
-#endif
+//#ifdef DEBUG
+//    printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
+//#endif
     // ucontext_t *contextCurrent = &taskCurrent->context;
 
     task_t *taskPrevious = taskCurrent;
     taskCurrent = task;
+    taskCurrent->ticks = QUANTUM;
 
     swapcontext(&taskPrevious->context, &task->context);
 

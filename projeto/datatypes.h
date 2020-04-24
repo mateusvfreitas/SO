@@ -19,6 +19,7 @@
 
 enum status {Ready, Suspended, Ended};
 
+
 // Estrutura que define uma tarefa
 typedef struct task_t
 {
@@ -31,6 +32,10 @@ typedef struct task_t
     int dynamicPrio;
     int sysTask; // Flag que diferencia tarefas de sistema de taredas de usuário
     int ticks;
+    unsigned int activations;
+    unsigned int processorTime;
+    unsigned int execStart;
+    unsigned int procStart;
 
 } task_t ;
 

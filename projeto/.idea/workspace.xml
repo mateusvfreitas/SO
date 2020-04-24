@@ -12,8 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a77f7fa1-d386-45a8-9865-dd8cb823a3db" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/C.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/DependInfo.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/build.make" afterDir="false" />
@@ -21,7 +21,7 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong-scheduler.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong-scheduler.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong-preempcao.c.o" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projeto" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projeto" afterDir="false" />
@@ -99,7 +99,8 @@
       <workItem from="1587299254522" duration="18000" />
       <workItem from="1587299367260" duration="15954000" />
       <workItem from="1587580507465" duration="2950000" />
-      <workItem from="1587583495067" duration="9637000" />
+      <workItem from="1587583495067" duration="9877000" />
+      <workItem from="1587747611853" duration="7703000" />
     </task>
     <servers />
   </component>
@@ -151,22 +152,22 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="1320" height="193" key="GridCell.Tab.-1.right/0.0.1366.768@0.0.1366.768" timestamp="1587300865845" />
-    <state width="1320" height="408" key="GridCell.Tab.0.bottom" timestamp="1587594522191">
+    <state width="1320" height="246" key="GridCell.Tab.0.bottom" timestamp="1587756497422">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="408" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1587594522191" />
-    <state width="1320" height="408" key="GridCell.Tab.0.center" timestamp="1587594522191">
+    <state width="1320" height="246" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1587756497422" />
+    <state width="1320" height="246" key="GridCell.Tab.0.center" timestamp="1587756497422">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="408" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1587594522191" />
-    <state width="1320" height="408" key="GridCell.Tab.0.left" timestamp="1587594522190">
+    <state width="1320" height="246" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1587756497422" />
+    <state width="1320" height="246" key="GridCell.Tab.0.left" timestamp="1587756497421">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="408" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1587594522190" />
-    <state width="1320" height="408" key="GridCell.Tab.0.right" timestamp="1587594522191">
+    <state width="1320" height="246" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1587756497421" />
+    <state width="1320" height="246" key="GridCell.Tab.0.right" timestamp="1587756497422">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="408" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1587594522191" />
+    <state width="1320" height="246" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1587756497422" />
     <state width="1320" height="193" key="GridCell.Tab.1.bottom" timestamp="1587300854536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -197,15 +198,6 @@
     <state x="473" y="249" width="400" height="284" key="scopes/0.0.1366.768@0.0.1366.768" timestamp="1587582544251" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/pingpong.c</url>
-          <line>50</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="next-&gt;tid" />

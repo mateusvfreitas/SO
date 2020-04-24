@@ -8,13 +8,14 @@ task_t *taskCurrent;
 task_t dispatcher;
 task_t *tasksReady;
 task_t *tasksSuspended;
+unsigned int clock;
 
 // estrutura que define um tratador de sinal
 struct sigaction action ;
 // estrutura de inicialização to timer
 struct itimerval timer;
 
-task_t *scheduler()
+task_t *aging(task_t *tasksReady)
 {
     int lowest;
     int alfa = -1;
@@ -42,6 +43,15 @@ task_t *scheduler()
 
     eldest->dynamicPrio = eldest->staticPrio;
     return eldest;
+}
+
+task_t *scheduler()
+{
+    task_t *schedule = aging(tasksReady);
+
+//    Em caso de política FCFS, usar:
+//    task_t *schedule = tasksReady;
+    return schedule;
 }
 
 void dispatcher_body(void *arg)
@@ -76,6 +86,7 @@ void dispatcher_body(void *arg)
 // Similar à timer.c ===========================================================
 void tratador()
 {
+    clock += 1;
     // Ao ser acionada, a rotina de tratamento de ticks de relógio deve decrementar o contador de quantum da tarefa
     // corrente, se for uma tarefa de usuário.
     if(taskCurrent->sysTask == 0)
@@ -94,7 +105,6 @@ void tratador()
     {
         return;
     }
-    
 }
 
 void timerFunction()
@@ -184,6 +194,10 @@ int task_create(task_t *task, void (*start_func)(void *), void *arg)
     task->staticPrio = PRIO;
     task->dynamicPrio = PRIO;
     task->sysTask = 0;
+    task->activations = 0;
+    task->processorTime = 0;
+    task->execStart = systime();
+    task->procStart = systime();
 
 #ifdef DEBUG
     printf("task_create: criou tarefa %d\n", task->tid);
@@ -198,9 +212,10 @@ void task_exit(int exitCode)
 #ifdef DEBUG
     printf("task_exit: tarefa %d sendo encerrada\n", taskCurrent->tid);
 #endif
+    printf("Task %d: execution time %u ms, processor time %u ms, %u activations\n",
+            taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
 
     taskCurrent->status = Ended;
-
     task_switch(taskCurrent->controle);
 }
 
@@ -214,6 +229,11 @@ int task_switch(task_t *task)
 
     task_t *taskPrevious = taskCurrent;
     taskCurrent = task;
+
+    taskPrevious->processorTime += systime() - taskPrevious->procStart;
+    taskCurrent->procStart = systime();
+    taskCurrent->activations += 1;
+
     taskCurrent->ticks = QUANTUM;
 
     swapcontext(&taskPrevious->context, &task->context);
@@ -310,4 +330,9 @@ int task_getprio(task_t *task)
     {
         return task->staticPrio;
     }
+}
+
+unsigned int systime()
+{
+    return clock;
 }

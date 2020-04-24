@@ -20,7 +20,11 @@ signal.h
 sys/time.h
 -
 
-/home/mateus/Documents/UTFPR/SO/projeto/pingpong.c
+/home/mateus/Documents/UTFPR/SO/projeto/pingpong-contab-prio.c
+stdio.h
+-
+stdlib.h
+-
 pingpong.h
 /home/mateus/Documents/UTFPR/SO/projeto/pingpong.h
 

@@ -11,4 +11,4 @@ add_executable(projeto
         pingpong.h
         queue.c
         queue.h
-        pingpong-contab-prio.c)
+        pingpong-maintask.c)

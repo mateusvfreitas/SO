@@ -1,19 +1,16 @@
 CC=gcc
 CFLAGS=-I. -Wall -g
 DEPS = datatypes.h pingpong.h queue.h
-OBJ = pingpong.o pingpong-contab.o pingpong-contab-prio.o queue.o
+OBJ = pingpong.o pingpong-maintask.o queue.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-all: noprio prio
+all: maintask
 
-noprio: pingpong-contab.o pingpong.o queue.o
-	$(CC) -o $@ $^ $(CFLAGS)
-
-prio: pingpong-contab-prio.o pingpong.o queue.o
+maintask: pingpong-maintask.o pingpong.o queue.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
 .PHONY : clean
 clean :
-	-rm -f $(OBJ) noprio prio
+	-rm -f $(OBJ) maintask

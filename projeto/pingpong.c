@@ -139,9 +139,24 @@ void timerFunction()
 // Inicializa o sistema operacional; deve ser chamada no inicio do main()
 void pingpong_init()
 {
+    //criando taskMain
     taskId = 0;
     taskMain.tid = 0;
     taskId += 1;
+
+    taskMain.controle = &dispatcher;
+    taskMain.staticPrio = PRIO;
+    taskMain.dynamicPrio = PRIO;
+
+    taskMain.status = Ready;
+    taskMain.sysTask = 0;
+    taskMain.activations = 0;
+    taskMain.processorTime = 0;
+    taskMain.procStart = systime();
+    taskMain.execStart = systime();
+
+    queue_append((queue_t**) &tasksReady, (queue_t*) &taskMain);
+
     taskCurrent = &taskMain;
 
     task_create(&dispatcher, dispatcher_body, NULL);
@@ -150,6 +165,7 @@ void pingpong_init()
     queue_remove((queue_t **)&tasksReady, (queue_t *)&dispatcher);
     timerFunction();
 
+    task_yield();
     /* desativa o buffer da saida padrao (stdout), usado pela função printf */
     setvbuf(stdout, 0, _IONBF, 0);
 }

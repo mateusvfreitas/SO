@@ -143,11 +143,9 @@ void pingpong_init()
     taskId = 0;
     taskMain.tid = 0;
     taskId += 1;
-
     taskMain.controle = &dispatcher;
     taskMain.staticPrio = PRIO;
     taskMain.dynamicPrio = PRIO;
-
     taskMain.status = Ready;
     taskMain.sysTask = 0;
     taskMain.activations = 0;
@@ -166,6 +164,7 @@ void pingpong_init()
     timerFunction();
 
     task_yield();
+
     /* desativa o buffer da saida padrao (stdout), usado pela função printf */
     setvbuf(stdout, 0, _IONBF, 0);
 }

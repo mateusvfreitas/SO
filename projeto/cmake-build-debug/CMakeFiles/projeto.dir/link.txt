@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/projeto.dir/pingpong.c.o CMakeFiles/projeto.dir/queue.c.o CMakeFiles/projeto.dir/pingpong-contab-prio.c.o  -o projeto 
+/usr/bin/cc -g   CMakeFiles/projeto.dir/pingpong.c.o CMakeFiles/projeto.dir/queue.c.o CMakeFiles/projeto.dir/pingpong-maintask.c.o  -o projeto 

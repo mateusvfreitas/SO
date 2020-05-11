@@ -83,7 +83,7 @@
 		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/datatypes.h">
 			<Option target="projeto"/>
 		</Unit>
-		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/pingpong-contab-prio.c">
+		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/pingpong-maintask.c">
 			<Option target="projeto"/>
 		</Unit>
 		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/pingpong.c">

@@ -58,25 +58,22 @@ void dispatcher_body(void *arg)
 {
     while (queue_size((queue_t *)tasksReady) > 0)
     {
+        //tarefa mais velha da fila ready
         task_t *next = scheduler();
         if (next)
         {
             // Trocas de contexto
-            task_switch(next);
-            if (next->status == Ready)
-            {
-                queue_remove((queue_t **)&tasksReady, (queue_t *)next);
-                queue_append((queue_t **)&tasksReady, (queue_t *)next);
-            }
-
-            else if (next->status == Ended)
+            if (next->status == Ended)
             {
                 queue_remove((queue_t **)&tasksReady, (queue_t *)next);
             }
-
-            else
+            else if (next->status == Suspended)
             {
-                return;
+                task_suspend(next, &tasksSuspended);
+            }
+            else if (next->status == Ready)
+            {
+                task_switch(next);
             }
         }
     }
@@ -160,7 +157,7 @@ void pingpong_init()
     taskCurrent = &taskMain;
 
     task_create(&dispatcher, dispatcher_body, NULL);
-    dispatcher.controle = &taskMain;
+    dispatcher.controle = NULL;
     dispatcher.sysTask = 1; // Dispatcher é uma tarefa crítica -> tarefa de sistema
     queue_remove((queue_t **)&tasksReady, (queue_t *)&dispatcher);
     timerFunction();
@@ -232,7 +229,42 @@ void task_exit(int exitCode)
             taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
 
     taskCurrent->status = Ended;
-    task_switch(taskCurrent->controle);
+
+    //fazer um while com variavel aux = taskssuspended -> next
+    //usar o waitingtid para acordar a tarefa
+    task_t *suspArray[666];
+    int i=0;
+    if (tasksSuspended)
+    {
+        task_t *first = tasksSuspended;
+        task_t *aux = tasksSuspended->next;
+        do
+        {
+            if (aux->waitingTId == taskCurrent->tid)
+            {
+                aux->status = Ready;
+                suspArray[i] = aux;
+                i++;
+                //coloca no array de tarefas a suspender
+                //queue_remove((queue_t **)&tasksSuspended, (queue_t *)aux);
+                //queue_append((queue_t **)&tasksReady, (queue_t *)aux);
+                aux->waitingTId = -1;
+            }
+            aux = aux->next;
+        }while (aux != first);
+
+        //remove do array e coloca na fila
+        for (int j=0; j<i; j++)
+        {
+            queue_remove((queue_t **)&tasksSuspended, (queue_t *)suspArray[j]);
+            queue_append((queue_t **)&tasksReady, (queue_t *)suspArray[j]);
+        }
+    }
+    taskCurrent->exitCode = exitCode;
+    if (taskCurrent->controle != NULL)
+    {
+        task_switch(taskCurrent->controle);
+    }
 }
 
 // alterna a execução para a tarefa indicada
@@ -281,7 +313,7 @@ void task_suspend(task_t *task, task_t **queue)
     }
 
     queue_remove((queue_t **)&tasksReady, (queue_t *)task);
-    queue_append((queue_t **)&tasksSuspended, (queue_t *)task);
+    queue_append((queue_t **)queue, (queue_t *)task);
 
     task->status = Suspended;
 }
@@ -351,4 +383,18 @@ int task_getprio(task_t *task)
 unsigned int systime()
 {
     return clock;
+}
+
+int task_join (task_t *task)
+{
+    //se a tarefa nao existir ou ja foi encerrada
+    if ((task == NULL) || (task->status == Ended))
+    {
+        return (-1);
+    }
+    taskCurrent->waitingTId = task->tid;
+    task_suspend(taskCurrent, &tasksSuspended);
+    task_yield();
+    return task->exitCode;
+    //problemas de concorrencia
 }

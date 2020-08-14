@@ -36,6 +36,8 @@ typedef struct task_t
     unsigned int processorTime;
     unsigned int execStart;
     unsigned int procStart;
+    int exitCode;
+    int waitingTId;
 
 } task_t ;
 

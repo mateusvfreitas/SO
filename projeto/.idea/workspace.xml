@@ -13,7 +13,23 @@
   <component name="ChangeListManager">
     <list default="true" id="a77f7fa1-d386-45a8-9865-dd8cb823a3db" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/C.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/C.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong-contab-prio.c.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/projeto" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projeto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/projeto.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projeto.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maintask" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pingpong-maintask.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pingpong.c" beforeDir="false" afterPath="$PROJECT_DIR$/pingpong.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pingpong.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/queue.o" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +57,7 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="ObjectiveC" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/pingpong-preempcao.c" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.ChangelistConflict" />
+    <property name="settings.editor.selected.configurable" value="diff.base" />
   </component>
   <component name="RunManager" selected="CMake Application.projeto">
     <configuration name="gyygy" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="projeto" TARGET_NAME="Unnamed" CONFIG_NAME="Unnamed" RUN_PATH="$PROJECT_DIR$/scheduler">
@@ -85,7 +101,10 @@
       <workItem from="1587299367260" duration="15954000" />
       <workItem from="1587580507465" duration="2950000" />
       <workItem from="1587583495067" duration="9877000" />
-      <workItem from="1587747611853" duration="8330000" />
+      <workItem from="1587747611853" duration="8933000" />
+      <workItem from="1588179760529" duration="3092000" />
+      <workItem from="1588183472806" duration="634000" />
+      <workItem from="1588190856489" duration="4339000" />
     </task>
     <servers />
   </component>
@@ -117,10 +136,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="345" y="88" width="666" height="599" key="#gyygy/0.0.1366.768@0.0.1366.768" timestamp="1587161757610" />
-    <state x="466" y="142" width="424" height="491" key="FileChooserDialogImpl" timestamp="1587582911084">
+    <state x="466" y="142" width="501" height="491" key="FileChooserDialogImpl" timestamp="1588192193920">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="466" y="142" width="424" height="491" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1587582911084" />
+    <state x="466" y="142" width="501" height="491" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1588192193920" />
     <state width="1320" height="193" key="GridCell.Tab.-1.bottom" timestamp="1587300865845">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -137,22 +156,22 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="1320" height="193" key="GridCell.Tab.-1.right/0.0.1366.768@0.0.1366.768" timestamp="1587300865845" />
-    <state width="1320" height="246" key="GridCell.Tab.0.bottom" timestamp="1587756497422">
+    <state width="1320" height="286" key="GridCell.Tab.0.bottom" timestamp="1588196425441">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="246" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1587756497422" />
-    <state width="1320" height="246" key="GridCell.Tab.0.center" timestamp="1587756497422">
+    <state width="1320" height="286" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1588196425441" />
+    <state width="1320" height="286" key="GridCell.Tab.0.center" timestamp="1588196425440">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="246" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1587756497422" />
-    <state width="1320" height="246" key="GridCell.Tab.0.left" timestamp="1587756497421">
+    <state width="1320" height="286" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1588196425440" />
+    <state width="1320" height="286" key="GridCell.Tab.0.left" timestamp="1588196425440">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="246" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1587756497421" />
-    <state width="1320" height="246" key="GridCell.Tab.0.right" timestamp="1587756497422">
+    <state width="1320" height="286" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1588196425440" />
+    <state width="1320" height="286" key="GridCell.Tab.0.right" timestamp="1588196425441">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state width="1320" height="246" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1587756497422" />
+    <state width="1320" height="286" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1588196425441" />
     <state width="1320" height="193" key="GridCell.Tab.1.bottom" timestamp="1587300854536">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -169,10 +188,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state width="1320" height="193" key="GridCell.Tab.1.right/0.0.1366.768@0.0.1366.768" timestamp="1587300854536" />
-    <state x="172" y="19" key="SettingsEditor" timestamp="1587582011165">
+    <state x="156" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1588192331251">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="172" y="19" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1587582011165" />
+    <state x="156" y="31" width="1022" height="737" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1588192331251" />
     <state x="564" y="163" key="com.intellij.tools.ToolSelectDialog.dimensionServiceKey" timestamp="1587161797692">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

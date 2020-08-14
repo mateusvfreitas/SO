@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/projeto.dir/pingpong-contab-prio.c.o"
+  "CMakeFiles/projeto.dir/pingpong-maintask.c.o"
   "CMakeFiles/projeto.dir/pingpong.c.o"
   "CMakeFiles/projeto.dir/queue.c.o"
   "projeto"

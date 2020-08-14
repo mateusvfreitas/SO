@@ -123,32 +123,32 @@ projeto/fast:
 	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/build
 .PHONY : projeto/fast
 
-pingpong-contab-prio.o: pingpong-contab-prio.c.o
+pingpong-maintask.o: pingpong-maintask.c.o
 
-.PHONY : pingpong-contab-prio.o
+.PHONY : pingpong-maintask.o
 
 # target to build an object file
-pingpong-contab-prio.c.o:
-	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-contab-prio.c.o
-.PHONY : pingpong-contab-prio.c.o
+pingpong-maintask.c.o:
+	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-maintask.c.o
+.PHONY : pingpong-maintask.c.o
 
-pingpong-contab-prio.i: pingpong-contab-prio.c.i
+pingpong-maintask.i: pingpong-maintask.c.i
 
-.PHONY : pingpong-contab-prio.i
+.PHONY : pingpong-maintask.i
 
 # target to preprocess a source file
-pingpong-contab-prio.c.i:
-	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-contab-prio.c.i
-.PHONY : pingpong-contab-prio.c.i
+pingpong-maintask.c.i:
+	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-maintask.c.i
+.PHONY : pingpong-maintask.c.i
 
-pingpong-contab-prio.s: pingpong-contab-prio.c.s
+pingpong-maintask.s: pingpong-maintask.c.s
 
-.PHONY : pingpong-contab-prio.s
+.PHONY : pingpong-maintask.s
 
 # target to generate assembly for a file
-pingpong-contab-prio.c.s:
-	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-contab-prio.c.s
-.PHONY : pingpong-contab-prio.c.s
+pingpong-maintask.c.s:
+	$(MAKE) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-maintask.c.s
+.PHONY : pingpong-maintask.c.s
 
 pingpong.o: pingpong.c.o
 
@@ -213,9 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... projeto"
-	@echo "... pingpong-contab-prio.o"
-	@echo "... pingpong-contab-prio.i"
-	@echo "... pingpong-contab-prio.s"
+	@echo "... pingpong-maintask.o"
+	@echo "... pingpong-maintask.i"
+	@echo "... pingpong-maintask.s"
 	@echo "... pingpong.o"
 	@echo "... pingpong.i"
 	@echo "... pingpong.s"

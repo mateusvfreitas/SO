@@ -17,7 +17,7 @@
 #define STACKSIZE 32768		/* tamanho de pilha das threads */
 #define _XOPEN_SOURCE 600	/* para compilar no MacOS */
 
-enum status {Ready, Suspended, Ended};
+enum status {READY, SUSPENDED, ENDED, SLEEPING};
 
 
 // Estrutura que define uma tarefa
@@ -36,8 +36,10 @@ typedef struct task_t
     unsigned int processorTime;
     unsigned int execStart;
     unsigned int procStart;
+    unsigned int timeToWakeUp;
     int exitCode;
     int waitingTId;
+
 
 } task_t ;
 

@@ -1,6 +1,7 @@
 #include "pingpong.h"
 #define PRIO 0
 #define QUANTUM 20
+#define WAKE_UP_CHECK 73 // Checa fila de adormecidas a cada 200 milisegundos
 
 int taskId;
 task_t taskMain;
@@ -8,70 +9,145 @@ task_t *taskCurrent;
 task_t dispatcher;
 task_t *tasksReady;
 task_t *tasksSuspended;
+task_t *tasksSleeping;
 unsigned int clock;
 
 // estrutura que define um tratador de sinal
-struct sigaction action ;
+struct sigaction action;
 // estrutura de inicialização to timer
 struct itimerval timer;
 
-task_t *aging(task_t *tasksReady)
+task_t *aging(task_t *tasksToAge)
 {
+    if(tasksToAge == NULL)
+    {
+        return NULL;
+    }
     int lowest;
     int alfa = -1;
 
-    task_t *first = tasksReady;
-    task_t *aux = tasksReady->next;
-    task_t *eldest = tasksReady;
+    task_t *first = tasksToAge;
+    task_t *aux = tasksToAge;
+    task_t *eldest = tasksToAge;
     lowest = eldest->dynamicPrio;
 
-    while(aux != first)
+    do
     {
-        if((aux->dynamicPrio < lowest))
+        if (aux->dynamicPrio < lowest)
         {
             lowest = aux->dynamicPrio;
-            eldest->dynamicPrio += alfa;
             eldest = aux;
+            eldest->dynamicPrio += alfa;
+
         }
 
-        else
-        {
-            aux->dynamicPrio--;
-        }
+//        aux->dynamicPrio--;
+
         aux = aux->next;
-    }
+    } while (aux != first);
+
+//    do
+//    {
+//        if (aux->dynamicPrio < lowest)
+//        {
+//            lowest = aux->dynamicPrio;
+////            eldest->dynamicPrio += alfa;
+//            eldest = aux;
+//        }
+//
+//        else
+//        {
+//            aux->dynamicPrio--;
+//        }
+//        aux = aux->next;
+//    } while (aux != first);
 
     eldest->dynamicPrio = eldest->staticPrio;
     return eldest;
 }
 
+//task_t *aging(task_t *tasksQueue)
+//{
+//    if(tasksReady == NULL)
+//    {
+//        return NULL;
+//    }
+//    int lowest;
+//    int alfa = -1;
+//    task_t *first = tasksQueue;
+//    task_t *aux = tasksQueue->next;
+//    task_t *eldest = tasksQueue;
+//    lowest = eldest->dynamicPrio;
+//    while(aux != first)
+//    {
+//        if((aux->dynamicPrio < lowest))
+//        {
+//            lowest = aux->dynamicPrio;
+//            eldest->dynamicPrio += alfa;
+//            eldest = aux;
+//        }
+//        else
+//        {
+//            aux->dynamicPrio--;
+//        }
+//        aux = aux->next;
+//    }
+//    eldest->dynamicPrio = eldest->staticPrio;
+//    return eldest;
+//}
+
 task_t *scheduler()
 {
     task_t *schedule = aging(tasksReady);
 
-//    Em caso de política FCFS, usar:
-//    task_t *schedule = tasksReady;
+    //    Em caso de política FCFS, usar:
+    //    task_t *schedule = tasksReady;
     return schedule;
 }
 
 void dispatcher_body(void *arg)
 {
-    while (queue_size((queue_t *)tasksReady) > 0)
+    while (queue_size((queue_t *)tasksReady) > 0 || queue_size((queue_t *)tasksSleeping) > 0)
     {
+        //periodicamente o dispatcher percorre a fila de tarefas adormecidas
+        if (systime() % WAKE_UP_CHECK == 0 && tasksSleeping != NULL)
+        {
+            task_t *sleepArray[666];
+            int i = 0;
+            task_t *first = tasksSleeping;
+            task_t *aux = tasksSleeping;
+            do
+            {
+                if (systime() >= aux->timeToWakeUp)
+                {
+                    sleepArray[i] = aux;
+                    i++;
+                    // aux->timeToWakeUp = -1;
+                }
+                aux = aux->next;
+            } while (aux != first);
+
+            //remove do array e coloca na fila
+            for (int j = 0; j < i; j++)
+            {
+                task_resume(sleepArray[j]);
+            }
+        }
+
         //tarefa mais velha da fila ready
         task_t *next = scheduler();
         if (next)
         {
             // Trocas de contexto
-            if (next->status == Ended)
+            if (next->status == ENDED)
             {
                 queue_remove((queue_t **)&tasksReady, (queue_t *)next);
             }
-            else if (next->status == Suspended)
+            else if (next->status == SUSPENDED)
             {
                 task_suspend(next, &tasksSuspended);
             }
-            else if (next->status == Ready)
+            else if (next->status == READY)
             {
                 task_switch(next);
             }
@@ -86,13 +162,13 @@ void tratador()
     clock += 1;
     // Ao ser acionada, a rotina de tratamento de ticks de relógio deve decrementar o contador de quantum da tarefa
     // corrente, se for uma tarefa de usuário.
-    if(taskCurrent->sysTask == 0)
+    if (taskCurrent->sysTask == 0)
     {
         taskCurrent->ticks--;
-        
+
         // Se o contador de quantum chegar a zero, a tarefa em execução deve voltar à fila de prontas e o controle do
         // processador deve ser devolvido ao dispatcher.
-        if(taskCurrent->ticks == 0)
+        if (taskCurrent->ticks == 0)
         {
             task_yield();
         }
@@ -107,27 +183,29 @@ void tratador()
 void timerFunction()
 {
     // registra a ação para o sinal de timer SIGALRM
-    action.sa_handler = tratador ;
-    sigemptyset (&action.sa_mask) ;
-    action.sa_flags = 0 ;
-    if (sigaction (SIGALRM, &action, 0) < 0)
+    action.sa_handler = tratador;
+    sigemptyset(&action.sa_mask);
+    action.sa_flags = 0;
+    if (sigaction(SIGALRM, &action, 0) < 0)
     {
-        perror ("Erro em sigaction: ") ;
-        exit (1) ;
+        perror("Erro em sigaction: ");
+        exit(1);
     }
 
     // ajusta valores do temporizador
-    timer.it_value.tv_usec = 1000 ;      // primeiro disparo, em micro-segundos
-    timer.it_value.tv_sec  = 0 ;      // primeiro disparo, em segundos
-    timer.it_interval.tv_usec = 1000 ;   // disparos subsequentes, em micro-segundos
-    timer.it_interval.tv_sec  = 0 ;   // disparos subsequentes, em segundos
+    timer.it_value.tv_usec = 1000;    // primeiro disparo, em micro-segundos
+    timer.it_value.tv_sec = 0;        // primeiro disparo, em segundos
+    timer.it_interval.tv_usec = 1000; // disparos subsequentes, em micro-segundos
+    timer.it_interval.tv_sec = 0;     // disparos subsequentes, em segundos
 
     // arma o temporizador ITIMER_REAL (vide man setitimer)
-    if (setitimer (ITIMER_REAL, &timer, 0) < 0)
+    if (setitimer(ITIMER_REAL, &timer, 0) < 0)
     {
-        perror ("Erro em setitimer: ") ;
-        exit (1) ;
+        perror("Erro em setitimer: ");
+        exit(1);
     }
+
+    clock = 0;
 }
 // =============================================================================
 
@@ -143,14 +221,14 @@ void pingpong_init()
     taskMain.controle = &dispatcher;
     taskMain.staticPrio = PRIO;
     taskMain.dynamicPrio = PRIO;
-    taskMain.status = Ready;
+    taskMain.status = READY;
     taskMain.sysTask = 0;
     taskMain.activations = 0;
     taskMain.processorTime = 0;
     taskMain.procStart = systime();
     taskMain.execStart = systime();
 
-    queue_append((queue_t**) &tasksReady, (queue_t*) &taskMain);
+    queue_append((queue_t **)&tasksReady, (queue_t *)&taskMain);
 
     taskCurrent = &taskMain;
 
@@ -201,7 +279,7 @@ int task_create(task_t *task, void (*start_func)(void *), void *arg)
     task->context = newContext;
     task->tid = taskId;
     taskId++;
-    task->status = Ready;
+    task->status = READY;
     task->controle = &dispatcher;
     task->staticPrio = PRIO;
     task->dynamicPrio = PRIO;
@@ -225,38 +303,34 @@ void task_exit(int exitCode)
     printf("task_exit: tarefa %d sendo encerrada\n", taskCurrent->tid);
 #endif
     printf("Task %d: execution time %u ms, processor time %u ms, %u activations\n",
-            taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
+           taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
 
-    taskCurrent->status = Ended;
+    taskCurrent->status = ENDED;
 
     //fazer um while com variavel aux = taskssuspended -> next
     //usar o waitingtid para acordar a tarefa
     task_t *suspArray[666];
-    int i=0;
+    int i = 0;
     if (tasksSuspended)
     {
         task_t *first = tasksSuspended;
-        task_t *aux = tasksSuspended->next;
+        task_t *aux = tasksSuspended;
         do
         {
             if (aux->waitingTId == taskCurrent->tid)
             {
-                aux->status = Ready;
+                //coloca no array de tarefas a suspender
                 suspArray[i] = aux;
                 i++;
-                //coloca no array de tarefas a suspender
-                //queue_remove((queue_t **)&tasksSuspended, (queue_t *)aux);
-                //queue_append((queue_t **)&tasksReady, (queue_t *)aux);
                 aux->waitingTId = -1;
             }
             aux = aux->next;
-        }while (aux != first);
+        } while (aux != first);
 
         //remove do array e coloca na fila
-        for (int j=0; j<i; j++)
+        for (int j = 0; j < i; j++)
         {
-            queue_remove((queue_t **)&tasksSuspended, (queue_t *)suspArray[j]);
-            queue_append((queue_t **)&tasksReady, (queue_t *)suspArray[j]);
+            task_resume(suspArray[j]);
         }
     }
     taskCurrent->exitCode = exitCode;
@@ -269,9 +343,9 @@ void task_exit(int exitCode)
 // alterna a execução para a tarefa indicada
 int task_switch(task_t *task)
 {
-//#ifdef DEBUG
-//    printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
-//#endif
+    //#ifdef DEBUG
+    //    printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
+    //#endif
     // ucontext_t *contextCurrent = &taskCurrent->context;
 
     task_t *taskPrevious = taskCurrent;
@@ -314,17 +388,24 @@ void task_suspend(task_t *task, task_t **queue)
     queue_remove((queue_t **)&tasksReady, (queue_t *)task);
     queue_append((queue_t **)queue, (queue_t *)task);
 
-    task->status = Suspended;
+    task->status = SUSPENDED;
 }
 
 // acorda uma tarefa, retirando-a de sua fila atual, adicionando-a à fila de
 // tarefas prontas ("ready queue") e mudando seu estado para "pronta"
 void task_resume(task_t *task)
 {
-    queue_remove((queue_t **)&tasksSuspended, (queue_t *)task);
-    queue_append((queue_t **)&tasksReady, (queue_t *)task);
+    if (task->status == SUSPENDED)
+    {
+        queue_remove((queue_t **)&tasksSuspended, (queue_t *)task);
+    }
+    else if (task->status == SLEEPING)
+    {
+        queue_remove((queue_t **)&tasksSleeping, (queue_t *)task);
+    }
 
-    task->status = Ready;
+    queue_append((queue_t **)&tasksReady, (queue_t *)task);
+    task->status = READY;
 }
 
 // operações de escalonamento ==================================================
@@ -384,10 +465,10 @@ unsigned int systime()
     return clock;
 }
 
-int task_join (task_t *task)
+int task_join(task_t *task)
 {
     //se a tarefa nao existir ou ja foi encerrada
-    if ((task == NULL) || (task->status == Ended))
+    if ((task == NULL) || (task->status == ENDED))
     {
         return (-1);
     }
@@ -396,4 +477,19 @@ int task_join (task_t *task)
     task_yield();
     return task->exitCode;
     //problemas de concorrencia
+}
+
+// suspende a tarefa corrente por t segundos
+void task_sleep(int t)
+{
+    // Retira a tarefasolicitante da fila de prontas e a coloca na de adormecidas
+    queue_remove((queue_t **)&tasksReady, (queue_t *)taskCurrent);
+    queue_append((queue_t **)&tasksSleeping, (queue_t *)taskCurrent);
+    taskCurrent->status = SLEEPING;
+
+    // Calcula o instante em que a tarefa deve ser acordada
+    taskCurrent->timeToWakeUp = systime() + 1000 * t;
+
+    // Devolve o controle ao dispatcher
+    task_yield();
 }

@@ -274,6 +274,7 @@ int task_create(task_t *task, void (*start_func)(void *), void *arg)
     // Ajusta alguns valores internos do contexto salvo em newContext
     makecontext(&newContext, (void *)(*start_func), 1, arg);
 
+    task->queueType = &tasksReady;
     queue_append((queue_t **)&tasksReady, (queue_t *)task);
 
     task->context = newContext;
@@ -371,8 +372,7 @@ int task_id()
     return (taskCurrent->tid);
 }
 
-// suspende uma tarefa, retirando-a de sua fila atual, adicionando-a à fila
-// queue e mudando seu estado para "suspensa"; usa a tarefa atual se task==NULL
+// suspende uma tarefa, retirando-a de sua fila atual, adicionando-a à fila queue e mudando seu estado para "suspensa"; usa a tarefa atual se task==NULL
 void task_suspend(task_t *task, task_t **queue)
 {
     if (task == NULL)
@@ -385,33 +385,32 @@ void task_suspend(task_t *task, task_t **queue)
         return;
     }
 
+    task->queueType = queue;
     queue_remove((queue_t **)&tasksReady, (queue_t *)task);
     queue_append((queue_t **)queue, (queue_t *)task);
 
     task->status = SUSPENDED;
 }
 
-// acorda uma tarefa, retirando-a de sua fila atual, adicionando-a à fila de
-// tarefas prontas ("ready queue") e mudando seu estado para "pronta"
+// acorda uma tarefa, retirando-a de sua fila atual, adicionando-a à fila de tarefas prontas ("ready queue") e mudando seu estado para "pronta"
 void task_resume(task_t *task)
 {
-    if (task->status == SUSPENDED)
-    {
-        queue_remove((queue_t **)&tasksSuspended, (queue_t *)task);
-    }
-    else if (task->status == SLEEPING)
-    {
-        queue_remove((queue_t **)&tasksSleeping, (queue_t *)task);
-    }
-
+    // if (task->status == SUSPENDED)
+    // {
+    //     queue_remove((queue_t **)&tasksSuspended, (queue_t *)task);
+    // }
+    // else if (task->status == SLEEPING)
+    // {
+    //     queue_remove((queue_t **)&tasksSleeping, (queue_t *)task);
+    // }
+    queue_remove((queue_t **)task->queueType,(queue_t *)task);
     queue_append((queue_t **)&tasksReady, (queue_t *)task);
     task->status = READY;
 }
 
 // operações de escalonamento ==================================================
 
-// libera o processador para a próxima tarefa, retornando à fila de tarefas
-// prontas ("ready queue")
+// libera o processador para a próxima tarefa, retornando à fila de tarefas prontas ("ready queue")
 void task_yield()
 {
     task_switch(&dispatcher);
@@ -485,6 +484,7 @@ void task_sleep(int t)
     // Retira a tarefasolicitante da fila de prontas e a coloca na de adormecidas
     queue_remove((queue_t **)&tasksReady, (queue_t *)taskCurrent);
     queue_append((queue_t **)&tasksSleeping, (queue_t *)taskCurrent);
+    taskCurrent->queueType = &tasksSleeping;
     taskCurrent->status = SLEEPING;
 
     // Calcula o instante em que a tarefa deve ser acordada
@@ -492,4 +492,87 @@ void task_sleep(int t)
 
     // Devolve o controle ao dispatcher
     task_yield();
+}
+
+// operações de IPC ============================================================
+
+// semáforos
+
+// cria um semáforo com valor inicial "value"
+int sem_create (semaphore_t *s, int value)
+{
+    if (s)
+    {
+        s->semCount = value;
+        s->semQueue = NULL;
+        s->destroyed = 0;
+        return 0;
+    }
+    return (-1);
+}
+
+// requisita o semáforo
+int sem_down (semaphore_t *s)
+{
+    if (s == NULL || s->destroyed)
+    {
+        return (-1);
+    }
+    //precisa verificar se sem count estourou?
+    s->semCount -= 1;
+    //caso o contador seja negativo, a tarefa corrente é suspensa, inserida no final da fila do semaforo e a execução volta ao dispatcher.
+    if(s->semCount < 0)
+    {
+        task_suspend(NULL, &s->semQueue);
+        task_yield();
+    }
+    return 0;
+}
+
+// libera o semáforo
+int sem_up (semaphore_t *s)
+{
+    if (s == NULL || s->destroyed)
+    {
+        return (-1);
+    }
+
+    s->semCount += 1;    
+    //se tiver coisa suspensa, acorda a primeira da fila do semáforo
+    if (s->semCount <= 0)
+    {
+        task_resume(s->semQueue);
+    }
+    return 0;
+}
+
+// destroi o semáforo, liberando as tarefas bloqueadas
+int sem_destroy (semaphore_t *s)
+{
+    if (s == NULL)
+    {
+        return (-1);
+    }
+
+    int i = 0;
+    task_t *resumeArray[666];
+    task_t *aux = s->semQueue;
+    task_t *first = s->semQueue;
+    
+    do
+    {
+        resumeArray[i] = aux;
+        i++;
+        aux = aux->next;
+    } while (aux != first);
+    
+    //codigo de erro?
+    for (int j = 0; j < i; j++)
+    {
+        task_resume(resumeArray[j]);
+    }
+
+    // s->semQueue = NULL;
+    s->destroyed = 1;
+    return 0;
 }

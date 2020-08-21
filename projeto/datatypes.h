@@ -39,6 +39,7 @@ typedef struct task_t
     unsigned int timeToWakeUp;
     int exitCode;
     int waitingTId;
+    struct task_t **queueType;
 
 
 } task_t ;
@@ -46,7 +47,9 @@ typedef struct task_t
 // estrutura que define um semáforo
 typedef struct
 {
-  // preencher quando necessário
+    int destroyed;
+    int semCount;
+    task_t *semQueue;
 } semaphore_t ;
 
 // estrutura que define um mutex

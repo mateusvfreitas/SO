@@ -54,10 +54,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/123/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/124/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/123/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/124/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -103,31 +103,31 @@ CMakeFiles/projeto.dir/queue.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projeto.dir/queue.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mateus/Documents/UTFPR/SO/projeto/queue.c -o CMakeFiles/projeto.dir/queue.c.s
 
-CMakeFiles/projeto.dir/pingpong-sleep.c.o: CMakeFiles/projeto.dir/flags.make
-CMakeFiles/projeto.dir/pingpong-sleep.c.o: ../pingpong-sleep.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/projeto.dir/pingpong-sleep.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/projeto.dir/pingpong-sleep.c.o   -c /home/mateus/Documents/UTFPR/SO/projeto/pingpong-sleep.c
+CMakeFiles/projeto.dir/pingpong-racecond.c.o: CMakeFiles/projeto.dir/flags.make
+CMakeFiles/projeto.dir/pingpong-racecond.c.o: ../pingpong-racecond.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/projeto.dir/pingpong-racecond.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/projeto.dir/pingpong-racecond.c.o   -c /home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c
 
-CMakeFiles/projeto.dir/pingpong-sleep.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projeto.dir/pingpong-sleep.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mateus/Documents/UTFPR/SO/projeto/pingpong-sleep.c > CMakeFiles/projeto.dir/pingpong-sleep.c.i
+CMakeFiles/projeto.dir/pingpong-racecond.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projeto.dir/pingpong-racecond.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c > CMakeFiles/projeto.dir/pingpong-racecond.c.i
 
-CMakeFiles/projeto.dir/pingpong-sleep.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projeto.dir/pingpong-sleep.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mateus/Documents/UTFPR/SO/projeto/pingpong-sleep.c -o CMakeFiles/projeto.dir/pingpong-sleep.c.s
+CMakeFiles/projeto.dir/pingpong-racecond.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projeto.dir/pingpong-racecond.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c -o CMakeFiles/projeto.dir/pingpong-racecond.c.s
 
 # Object files for target projeto
 projeto_OBJECTS = \
 "CMakeFiles/projeto.dir/pingpong.c.o" \
 "CMakeFiles/projeto.dir/queue.c.o" \
-"CMakeFiles/projeto.dir/pingpong-sleep.c.o"
+"CMakeFiles/projeto.dir/pingpong-racecond.c.o"
 
 # External object files for target projeto
 projeto_EXTERNAL_OBJECTS =
 
 projeto: CMakeFiles/projeto.dir/pingpong.c.o
 projeto: CMakeFiles/projeto.dir/queue.c.o
-projeto: CMakeFiles/projeto.dir/pingpong-sleep.c.o
+projeto: CMakeFiles/projeto.dir/pingpong-racecond.c.o
 projeto: CMakeFiles/projeto.dir/build.make
 projeto: CMakeFiles/projeto.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable projeto"

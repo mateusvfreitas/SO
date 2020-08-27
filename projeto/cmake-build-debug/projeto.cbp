@@ -83,7 +83,7 @@
 		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/datatypes.h">
 			<Option target="projeto"/>
 		</Unit>
-		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/pingpong-sleep.c">
+		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c">
 			<Option target="projeto"/>
 		</Unit>
 		<Unit filename="/home/mateus/Documents/UTFPR/SO/projeto/pingpong.c">

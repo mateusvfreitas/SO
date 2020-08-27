@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/projeto.dir/pingpong.c.o CMakeFiles/projeto.dir/queue.c.o CMakeFiles/projeto.dir/pingpong-sleep.c.o  -o projeto 
+/usr/bin/cc -g   CMakeFiles/projeto.dir/pingpong.c.o CMakeFiles/projeto.dir/queue.c.o CMakeFiles/projeto.dir/pingpong-racecond.c.o  -o projeto 

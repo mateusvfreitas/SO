@@ -554,6 +554,13 @@ int sem_destroy (semaphore_t *s)
         return (-1);
     }
 
+    s->destroyed = 1;
+
+    if(s->semQueue == NULL)
+    {
+        return 0;
+    }
+
     int i = 0;
     task_t *resumeArray[666];
     task_t *aux = s->semQueue;
@@ -573,6 +580,5 @@ int sem_destroy (semaphore_t *s)
     }
 
     // s->semQueue = NULL;
-    s->destroyed = 1;
     return 0;
 }

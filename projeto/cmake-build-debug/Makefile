@@ -59,10 +59,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/123/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/124/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/123/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/124/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = /home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/123/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/124/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -90,7 +90,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/123/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/124/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -143,32 +143,32 @@ projeto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/build
 .PHONY : projeto/fast
 
-pingpong-sleep.o: pingpong-sleep.c.o
+pingpong-racecond.o: pingpong-racecond.c.o
 
-.PHONY : pingpong-sleep.o
+.PHONY : pingpong-racecond.o
 
 # target to build an object file
-pingpong-sleep.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-sleep.c.o
-.PHONY : pingpong-sleep.c.o
+pingpong-racecond.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-racecond.c.o
+.PHONY : pingpong-racecond.c.o
 
-pingpong-sleep.i: pingpong-sleep.c.i
+pingpong-racecond.i: pingpong-racecond.c.i
 
-.PHONY : pingpong-sleep.i
+.PHONY : pingpong-racecond.i
 
 # target to preprocess a source file
-pingpong-sleep.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-sleep.c.i
-.PHONY : pingpong-sleep.c.i
+pingpong-racecond.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-racecond.c.i
+.PHONY : pingpong-racecond.c.i
 
-pingpong-sleep.s: pingpong-sleep.c.s
+pingpong-racecond.s: pingpong-racecond.c.s
 
-.PHONY : pingpong-sleep.s
+.PHONY : pingpong-racecond.s
 
 # target to generate assembly for a file
-pingpong-sleep.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-sleep.c.s
-.PHONY : pingpong-sleep.c.s
+pingpong-racecond.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-racecond.c.s
+.PHONY : pingpong-racecond.c.s
 
 pingpong.o: pingpong.c.o
 
@@ -233,9 +233,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... projeto"
-	@echo "... pingpong-sleep.o"
-	@echo "... pingpong-sleep.i"
-	@echo "... pingpong-sleep.s"
+	@echo "... pingpong-racecond.o"
+	@echo "... pingpong-racecond.i"
+	@echo "... pingpong-racecond.s"
 	@echo "... pingpong.o"
 	@echo "... pingpong.i"
 	@echo "... pingpong.s"

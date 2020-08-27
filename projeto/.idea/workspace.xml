@@ -15,8 +15,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
@@ -25,15 +23,12 @@
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/cmake_clean.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.internal" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/flags.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/projeto.dir/pingpong.c.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projeto" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projeto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/projeto.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/projeto.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datatypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/datatypes.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/makefile" beforeDir="false" afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pingpong-maintask.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pingpong.c" beforeDir="false" afterPath="$PROJECT_DIR$/pingpong.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +117,9 @@
       <workItem from="1588179760529" duration="3092000" />
       <workItem from="1588183472806" duration="634000" />
       <workItem from="1588190856489" duration="4339000" />
-      <workItem from="1597958075121" duration="12094000" />
+      <workItem from="1597958075121" duration="12686000" />
+      <workItem from="1598555997888" duration="43000" />
+      <workItem from="1598562551655" duration="1608000" />
     </task>
     <servers />
   </component>
@@ -134,22 +131,22 @@
       <screen x="0" y="0" width="1360" height="768" />
     </state>
     <state x="438" y="128" key="#xdebugger.evaluate/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1597965109571" />
-    <state width="1314" height="525" key="GridCell.Tab.0.bottom" timestamp="1597971446169">
+    <state width="1314" height="346" key="GridCell.Tab.0.bottom" timestamp="1598564278067">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1314" height="525" key="GridCell.Tab.0.bottom/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1597971446169" />
-    <state width="1314" height="525" key="GridCell.Tab.0.center" timestamp="1597971446168">
+    <state width="1314" height="346" key="GridCell.Tab.0.bottom/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1598564278067" />
+    <state width="1314" height="346" key="GridCell.Tab.0.center" timestamp="1598564278067">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1314" height="525" key="GridCell.Tab.0.center/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1597971446168" />
-    <state width="1314" height="525" key="GridCell.Tab.0.left" timestamp="1597971446168">
+    <state width="1314" height="346" key="GridCell.Tab.0.center/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1598564278067" />
+    <state width="1314" height="346" key="GridCell.Tab.0.left" timestamp="1598564278067">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1314" height="525" key="GridCell.Tab.0.left/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1597971446168" />
-    <state width="1314" height="525" key="GridCell.Tab.0.right" timestamp="1597971446168">
+    <state width="1314" height="346" key="GridCell.Tab.0.left/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1598564278067" />
+    <state width="1314" height="346" key="GridCell.Tab.0.right" timestamp="1598564278067">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
-    <state width="1314" height="525" key="GridCell.Tab.0.right/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1597971446168" />
+    <state width="1314" height="346" key="GridCell.Tab.0.right/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1598564278067" />
     <state x="344" y="167" key="run.anything.popup" timestamp="1597969462240">
       <screen x="0" y="0" width="1360" height="768" />
     </state>
@@ -160,6 +157,15 @@
     <state x="343" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1360.768/1360.0.1360.768@0.0.1360.768" timestamp="1597967852297" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/pingpong-racecond.c</url>
+          <line>49</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="aux-&gt;tid" />

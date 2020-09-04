@@ -11,7 +11,7 @@ task_t *tasksReady;
 task_t *tasksSuspended;
 task_t *tasksSleeping;
 unsigned int clock;
-int preemptavel = 1; //variavel de lock
+int preemptavel = 1; //variavel de lock, garante as mudancas de fila do semaforo
 
 // estrutura que define um tratador de sinal
 struct sigaction action;
@@ -521,7 +521,7 @@ int sem_create (semaphore_t *s, int value)
 // requisita o semáforo
 int sem_down (semaphore_t *s)
 {
-    //preemptavel = 0;
+    preemptavel = 0;
     if (s == NULL || s->destroyed)
     {
         return (-1);
@@ -532,16 +532,17 @@ int sem_down (semaphore_t *s)
     if(s->semCount < 0)
     {
         task_suspend(NULL, &s->semQueue);
+        preemptavel = 1;
         task_yield();
     }
-    //preemptavel = 1;
+    preemptavel = 1;
     return 0;
 }
 
 // libera o semáforo
 int sem_up (semaphore_t *s)
 {
-    //preemptavel = 0;
+    preemptavel = 0;
     if (s == NULL || s->destroyed)
     {
         return (-1);
@@ -553,7 +554,7 @@ int sem_up (semaphore_t *s)
     {
         task_resume(s->semQueue);
     }
-    //preemptavel = 1;
+    preemptavel = 1;
     return 0;
 }
 

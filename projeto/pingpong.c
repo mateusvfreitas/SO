@@ -11,6 +11,7 @@ task_t *tasksReady;
 task_t *tasksSuspended;
 task_t *tasksSleeping;
 unsigned int clock;
+int preemptavel = 1; //variavel de lock
 
 // estrutura que define um tratador de sinal
 struct sigaction action;
@@ -149,6 +150,9 @@ void dispatcher_body(void *arg)
             }
             else if (next->status == READY)
             {
+                queue_remove((queue_t **)&tasksReady, (queue_t *)next);
+                queue_append((queue_t **)&tasksReady, (queue_t *)next);
+                //printf(" Tarefa %d \n", next->tid);
                 task_switch(next);
             }
         }
@@ -170,7 +174,10 @@ void tratador()
         // processador deve ser devolvido ao dispatcher.
         if (taskCurrent->ticks == 0)
         {
-            task_yield();
+            if (preemptavel)
+            {
+                task_yield();
+            }
         }
     }
 
@@ -514,6 +521,7 @@ int sem_create (semaphore_t *s, int value)
 // requisita o semáforo
 int sem_down (semaphore_t *s)
 {
+    //preemptavel = 0;
     if (s == NULL || s->destroyed)
     {
         return (-1);
@@ -526,12 +534,14 @@ int sem_down (semaphore_t *s)
         task_suspend(NULL, &s->semQueue);
         task_yield();
     }
+    //preemptavel = 1;
     return 0;
 }
 
 // libera o semáforo
 int sem_up (semaphore_t *s)
 {
+    //preemptavel = 0;
     if (s == NULL || s->destroyed)
     {
         return (-1);
@@ -543,6 +553,7 @@ int sem_up (semaphore_t *s)
     {
         task_resume(s->semQueue);
     }
+    //preemptavel = 1;
     return 0;
 }
 

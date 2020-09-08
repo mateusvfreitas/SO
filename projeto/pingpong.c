@@ -229,6 +229,7 @@ void pingpong_init()
     taskMain.staticPrio = PRIO;
     taskMain.dynamicPrio = PRIO;
     taskMain.status = READY;
+    taskMain.queueType = &tasksReady;
     taskMain.sysTask = 0;
     taskMain.activations = 0;
     taskMain.processorTime = 0;
@@ -310,8 +311,8 @@ void task_exit(int exitCode)
 #ifdef DEBUG
     printf("task_exit: tarefa %d sendo encerrada\n", taskCurrent->tid);
 #endif
-    printf("Task %d: execution time %u ms, processor time %u ms, %u activations\n",
-           taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
+    // printf("Task %d: execution time %u ms, processor time %u ms, %u activations\n",
+    //        taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
 
     taskCurrent->status = ENDED;
 
@@ -592,5 +593,80 @@ int sem_destroy (semaphore_t *s)
     }
 
     // s->semQueue = NULL;
+    return 0;
+}
+
+// barreiras
+
+// Inicializa uma barreira
+int barrier_create (barrier_t *b, int N)
+{
+    if(b == NULL)
+    {
+        return -1;
+    }
+    b->destroyed = 0;
+    semaphore_t barrierSem;
+    sem_create(&barrierSem, 1);
+    b->semaphore = &barrierSem;
+    b->numThreads = N;
+    return 0;
+}
+
+// Chega a uma barreira
+int barrier_join (barrier_t *b)
+{
+    sem_down(b->semaphore); //para controle de condições de disputa
+
+    if(b == NULL || b->destroyed == 1)
+    {
+        return -1;
+    }
+
+    b->numThreads -= 1;
+    
+    if(b->numThreads > 0)
+    {
+        task_suspend(NULL, &b->barrierTaskQueue);
+        task_yield();
+    }
+    else
+    {
+        barrier_destroy(b);
+    }
+    
+    sem_up(b->semaphore);
+
+    return 0;
+}
+
+// Destrói uma barreira
+int barrier_destroy (barrier_t *b)
+{
+    if(b == NULL)
+    {
+        return -1;
+    }
+
+    int i = 0;
+    task_t *resumeArray[666];
+    task_t *aux = b->barrierTaskQueue;
+    task_t *first = b->barrierTaskQueue;
+
+    do
+    {
+        resumeArray[i] = aux;
+        i++;
+        aux = aux->next;
+    } while (aux != first);
+
+    //codigo de erro?
+    for (int j = 0; j < i; j++)
+    {
+        task_resume(resumeArray[j]);
+    }
+
+    b->destroyed = 1;
+
     return 0;
 }

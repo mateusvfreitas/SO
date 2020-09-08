@@ -1,19 +1,16 @@
 CC=gcc
 CFLAGS=-I. -Wall -g
 DEPS = datatypes.h pingpong.h queue.h
-OBJ = pingpong.o pingpong-prodcons.o queue.o pingpong-racecond.o
+OBJ = pingpong.o pingpong-barrier.o queue.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-all: prodcons racecond
+all: barrier
 
-prodcons: pingpong-prodcons.o pingpong.o queue.o
-	$(CC) -o $@ $^ $(CFLAGS)
-
-racecond: pingpong-racecond.o pingpong.o queue.o
+barrier: pingpong-barrier.o pingpong.o queue.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
 .PHONY : clean
 clean :
-	-rm -f $(OBJ) prodcons racecond
+	-rm -f $(OBJ) barrier

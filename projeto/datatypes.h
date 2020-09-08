@@ -61,7 +61,10 @@ typedef struct
 // estrutura que define uma barreira
 typedef struct
 {
-  // preencher quando necessário
+    int numThreads;
+    int destroyed;
+    semaphore_t *semaphore;
+    task_t *barrierTaskQueue;
 } barrier_t ;
 
 // estrutura que define uma fila de mensagens

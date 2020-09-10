@@ -103,31 +103,31 @@ CMakeFiles/projeto.dir/queue.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projeto.dir/queue.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mateus/Documents/UTFPR/SO/projeto/queue.c -o CMakeFiles/projeto.dir/queue.c.s
 
-CMakeFiles/projeto.dir/pingpong-racecond.c.o: CMakeFiles/projeto.dir/flags.make
-CMakeFiles/projeto.dir/pingpong-racecond.c.o: ../pingpong-racecond.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/projeto.dir/pingpong-racecond.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/projeto.dir/pingpong-racecond.c.o   -c /home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c
+CMakeFiles/projeto.dir/pingpong-barrier.c.o: CMakeFiles/projeto.dir/flags.make
+CMakeFiles/projeto.dir/pingpong-barrier.c.o: ../pingpong-barrier.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/projeto.dir/pingpong-barrier.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/projeto.dir/pingpong-barrier.c.o   -c /home/mateus/Documents/UTFPR/SO/projeto/pingpong-barrier.c
 
-CMakeFiles/projeto.dir/pingpong-racecond.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projeto.dir/pingpong-racecond.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c > CMakeFiles/projeto.dir/pingpong-racecond.c.i
+CMakeFiles/projeto.dir/pingpong-barrier.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/projeto.dir/pingpong-barrier.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mateus/Documents/UTFPR/SO/projeto/pingpong-barrier.c > CMakeFiles/projeto.dir/pingpong-barrier.c.i
 
-CMakeFiles/projeto.dir/pingpong-racecond.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projeto.dir/pingpong-racecond.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mateus/Documents/UTFPR/SO/projeto/pingpong-racecond.c -o CMakeFiles/projeto.dir/pingpong-racecond.c.s
+CMakeFiles/projeto.dir/pingpong-barrier.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/projeto.dir/pingpong-barrier.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mateus/Documents/UTFPR/SO/projeto/pingpong-barrier.c -o CMakeFiles/projeto.dir/pingpong-barrier.c.s
 
 # Object files for target projeto
 projeto_OBJECTS = \
 "CMakeFiles/projeto.dir/pingpong.c.o" \
 "CMakeFiles/projeto.dir/queue.c.o" \
-"CMakeFiles/projeto.dir/pingpong-racecond.c.o"
+"CMakeFiles/projeto.dir/pingpong-barrier.c.o"
 
 # External object files for target projeto
 projeto_EXTERNAL_OBJECTS =
 
 projeto: CMakeFiles/projeto.dir/pingpong.c.o
 projeto: CMakeFiles/projeto.dir/queue.c.o
-projeto: CMakeFiles/projeto.dir/pingpong-racecond.c.o
+projeto: CMakeFiles/projeto.dir/pingpong-barrier.c.o
 projeto: CMakeFiles/projeto.dir/build.make
 projeto: CMakeFiles/projeto.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mateus/Documents/UTFPR/SO/projeto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable projeto"

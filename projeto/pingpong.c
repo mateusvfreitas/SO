@@ -311,8 +311,8 @@ void task_exit(int exitCode)
 #ifdef DEBUG
     printf("task_exit: tarefa %d sendo encerrada\n", taskCurrent->tid);
 #endif
-    // printf("Task %d: execution time %u ms, processor time %u ms, %u activations\n",
-    //        taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
+    printf("Task %d: execution time %u ms, processor time %u ms, %u activations\n",
+           taskCurrent->tid, systime() - taskCurrent->execStart, taskCurrent->processorTime, taskCurrent->activations);
 
     taskCurrent->status = ENDED;
 
@@ -522,11 +522,11 @@ int sem_create (semaphore_t *s, int value)
 // requisita o semáforo
 int sem_down (semaphore_t *s)
 {
-    preemptavel = 0;
     if (s == NULL || s->destroyed)
     {
         return (-1);
     }
+    preemptavel = 0;
     //precisa verificar se sem count estourou?
     s->semCount -= 1;
     //caso o contador seja negativo, a tarefa corrente é suspensa, inserida no final da fila do semaforo e a execução volta ao dispatcher.
@@ -543,11 +543,11 @@ int sem_down (semaphore_t *s)
 // libera o semáforo
 int sem_up (semaphore_t *s)
 {
-    preemptavel = 0;
     if (s == NULL || s->destroyed)
     {
         return (-1);
     }
+    preemptavel = 0;
 
     s->semCount += 1;    
     //se tiver coisa suspensa, acorda a primeira da fila do semáforo
@@ -669,4 +669,107 @@ int barrier_destroy (barrier_t *b)
     b->destroyed = 1;
 
     return 0;
+}
+
+// filas de mensagens
+
+// cria uma fila para até max mensagens de size bytes cada
+int mqueue_create (mqueue_t *queue, int max, int size)
+{
+    if(queue == NULL)
+    {
+        return -1;
+    }
+    
+    semaphore_t *s_buffer, *s_mensagem, *s_vaga;
+    s_buffer = malloc(sizeof(semaphore_t));
+    s_mensagem = malloc(sizeof(semaphore_t));
+    s_vaga = malloc(sizeof(semaphore_t));
+    
+    sem_create(s_buffer, 1);
+    sem_create(s_mensagem, 0);
+    sem_create(s_vaga, max);
+
+    queue->s_buffer = s_buffer;
+    queue->s_mensagem = s_mensagem;
+    queue->s_vaga = s_vaga;
+    queue->sizeMensagem = size;
+
+    return 0;
+}
+
+// envia uma mensagem para a fila
+int mqueue_send (mqueue_t *queue, void *msg)
+{
+    sem_down(queue->s_vaga);
+    sem_down(queue->s_buffer);
+
+    if(queue == NULL || queue->destroyed == 1|| msg == NULL)
+    {
+        return -1;
+    }
+    
+
+    message *mensagem = malloc(sizeof(message));
+    mensagem->conteudo = malloc(queue->sizeMensagem);
+    mensagem->size = queue->sizeMensagem;
+
+    memcpy(mensagem->conteudo, msg, mensagem->size);
+    queue_append((queue_t **) &queue->messageQueue, (queue_t *) mensagem);
+
+    sem_up(queue->s_buffer);
+    sem_up(queue->s_mensagem);
+
+    return 0;
+}
+
+// recebe uma mensagem da fila
+int mqueue_recv (mqueue_t *queue, void *msg)
+{
+    sem_down(queue->s_mensagem);
+    sem_down(queue->s_buffer);
+
+    if(queue == NULL || queue->destroyed || msg == NULL)
+    {
+        return -1;
+    }
+    
+
+    message *mensagem = queue->messageQueue;
+
+    queue_remove((queue_t **) &queue->messageQueue, (queue_t *) mensagem);
+    memcpy(msg, mensagem->conteudo, mensagem->size);
+
+    sem_up(queue->s_buffer);
+    sem_up(queue->s_vaga);
+
+    return 0;
+}
+
+// destroi a fila, liberando as tarefas bloqueadas
+int mqueue_destroy (mqueue_t *queue)
+{
+    if(queue == NULL)
+    {
+        return -1;
+    }
+    
+    sem_destroy(queue->s_buffer);
+    sem_destroy(queue->s_mensagem);
+    sem_destroy(queue->s_vaga);
+
+    queue->destroyed = 1;
+
+    return 0;
+}
+
+// informa o número de mensagens atualmente na fila
+int mqueue_msgs (mqueue_t *queue)
+{
+    if(queue == NULL || queue->s_mensagem == NULL || queue->destroyed == 1)
+    {
+        return -1;
+    }
+
+    return queue->s_mensagem->semCount;
 }

@@ -143,32 +143,32 @@ projeto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/build
 .PHONY : projeto/fast
 
-pingpong-racecond.o: pingpong-racecond.c.o
+pingpong-barrier.o: pingpong-barrier.c.o
 
-.PHONY : pingpong-racecond.o
+.PHONY : pingpong-barrier.o
 
 # target to build an object file
-pingpong-racecond.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-racecond.c.o
-.PHONY : pingpong-racecond.c.o
+pingpong-barrier.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-barrier.c.o
+.PHONY : pingpong-barrier.c.o
 
-pingpong-racecond.i: pingpong-racecond.c.i
+pingpong-barrier.i: pingpong-barrier.c.i
 
-.PHONY : pingpong-racecond.i
+.PHONY : pingpong-barrier.i
 
 # target to preprocess a source file
-pingpong-racecond.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-racecond.c.i
-.PHONY : pingpong-racecond.c.i
+pingpong-barrier.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-barrier.c.i
+.PHONY : pingpong-barrier.c.i
 
-pingpong-racecond.s: pingpong-racecond.c.s
+pingpong-barrier.s: pingpong-barrier.c.s
 
-.PHONY : pingpong-racecond.s
+.PHONY : pingpong-barrier.s
 
 # target to generate assembly for a file
-pingpong-racecond.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-racecond.c.s
-.PHONY : pingpong-racecond.c.s
+pingpong-barrier.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/projeto.dir/build.make CMakeFiles/projeto.dir/pingpong-barrier.c.s
+.PHONY : pingpong-barrier.c.s
 
 pingpong.o: pingpong.c.o
 
@@ -233,9 +233,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... projeto"
-	@echo "... pingpong-racecond.o"
-	@echo "... pingpong-racecond.i"
-	@echo "... pingpong-racecond.s"
+	@echo "... pingpong-barrier.o"
+	@echo "... pingpong-barrier.i"
+	@echo "... pingpong-barrier.s"
 	@echo "... pingpong.o"
 	@echo "... pingpong.i"
 	@echo "... pingpong.s"

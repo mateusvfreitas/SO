@@ -13,6 +13,7 @@
 #include "queue.h"
 #include <signal.h>
 #include <sys/time.h>
+#include <string.h>
 
 #define STACKSIZE 32768		/* tamanho de pilha das threads */
 #define _XOPEN_SOURCE 600	/* para compilar no MacOS */
@@ -30,7 +31,7 @@ typedef struct task_t
     struct task_t *controle;
     int staticPrio;
     int dynamicPrio;
-    int sysTask; // Flag que diferencia tarefas de sistema de taredas de usuário
+    int sysTask; // Flag que diferencia tarefas de sistema de tarefas de usuário
     int ticks;
     unsigned int activations;
     unsigned int processorTime;
@@ -67,10 +68,23 @@ typedef struct
     task_t *barrierTaskQueue;
 } barrier_t ;
 
+typedef struct
+{
+    struct message *prev, *next;
+    int size;
+    void *conteudo;
+
+} message;
+
 // estrutura que define uma fila de mensagens
 typedef struct
 {
-  // preencher quando necessário
+    semaphore_t *s_buffer, *s_mensagem, *s_vaga;
+    int sizeMensagem;
+    int destroyed;
+    message *messageQueue;
 } mqueue_t ;
+
+
 
 #endif

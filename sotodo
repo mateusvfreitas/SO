@@ -5,3 +5,4 @@ s.o to do list
 3 - remover funcoes antigas comentadas
 4 - Tempos execução - pingpong-racecond
 5 - int i na main da mqueue
+6 - mutex para fzr o lock. Ex: livro 12.1.1 - pág 136

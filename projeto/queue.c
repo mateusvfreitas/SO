@@ -1,5 +1,3 @@
-
-
 #include "queue.h"
 #include <stdio.h>
 
@@ -173,16 +171,6 @@ int queue_size(queue_t *queue)
 
         return size;
     }
-
-    // queue_t current_node = * first;
-    // int i = 0;
-
-    // while(current_node.next != (first))
-    // {
-    //     i++;
-    // }
-
-    // return i;
 }
 
 //------------------------------------------------------------------------------

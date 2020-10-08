@@ -2,6 +2,7 @@
 #define PRIO 0
 #define QUANTUM 20
 
+// globais
 int taskId;
 task_t taskMain;
 task_t *taskCurrent;
@@ -15,6 +16,7 @@ struct sigaction action ;
 // estrutura de inicialização to timer
 struct itimerval timer;
 
+// envelhecimento de tarefas
 task_t *aging(task_t *tasksReady)
 {
     int lowest;
@@ -49,11 +51,12 @@ task_t *scheduler()
 {
     task_t *schedule = aging(tasksReady);
 
-//    Em caso de política FCFS, usar:
+//    em caso de política FCFS, usar:
 //    task_t *schedule = tasksReady;
     return schedule;
 }
 
+// controle geral de tarefas
 void dispatcher_body(void *arg)
 {
     while (queue_size((queue_t *)tasksReady) > 0)
@@ -222,10 +225,9 @@ void task_exit(int exitCode)
 // alterna a execução para a tarefa indicada
 int task_switch(task_t *task)
 {
-//#ifdef DEBUG
-//    printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
-//#endif
-    // ucontext_t *contextCurrent = &taskCurrent->context;
+#ifdef DEBUG
+   printf("task_switch: trocando contexto %d -> %d\n", taskCurrent->tid, task->tid);
+#endif
 
     task_t *taskPrevious = taskCurrent;
     taskCurrent = task;
@@ -241,7 +243,7 @@ int task_switch(task_t *task)
     return 0;
 }
 
-// retorna o identificador da tarefa corrente (main eh 0)
+// retorna o identificador da tarefa corrente (main é 0)
 int task_id()
 {
 #ifdef DEBUG
@@ -319,7 +321,7 @@ void task_setprio(task_t *task, int prio)
     }
 }
 
-// retorna a prioridade estática de uma tarefa (ou a tarefa atual)
+// retorna a prioridade estática de uma tarefa (ou da tarefa atual)
 int task_getprio(task_t *task)
 {
     if (task == NULL)

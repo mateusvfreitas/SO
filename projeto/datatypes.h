@@ -10,9 +10,9 @@
 #include <ucontext.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "queue.h"
 #include <signal.h>
 #include <sys/time.h>
+#include "queue.h"
 
 #define STACKSIZE 32768		/* tamanho de pilha das threads */
 #define _XOPEN_SOURCE 600	/* para compilar no MacOS */
@@ -25,12 +25,12 @@ typedef struct task_t
 {
     struct task_t *prev, *next ;
     int tid;
-    ucontext_t context; // Userlevel context
+    ucontext_t context; // userlevel context
     enum status status;
     struct task_t *controle;
     int staticPrio;
     int dynamicPrio;
-    int sysTask; // Flag que diferencia tarefas de sistema de taredas de usuário
+    int sysTask; // flag que diferencia tarefas de sistema de taredas de usuário
     int ticks;
     unsigned int activations;
     unsigned int processorTime;

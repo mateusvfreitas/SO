@@ -1,6 +1,2 @@
 # SO
-SO vem kkj
- Vim
-
-brili broli
-xesquedele
+UNIX system created almost from scratch
